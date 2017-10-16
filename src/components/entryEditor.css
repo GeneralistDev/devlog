@@ -1,0 +1,72 @@
+.RichEditor-root {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.RichEditor-controls {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+    user-select: none;
+}
+
+.RichEditor-styleButton {
+    color: #999;
+    cursor: pointer;
+    margin-right: 16px;
+    padding: 2px 0;
+    display: inline-block;
+}
+
+.RichEditor-activeButton {
+    color: #5890ff
+}
+
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+    display: none;
+}
+
+.publish-button {
+    border-radius: 4px;
+    margin-top: 5px;
+    border-color: #03a87c;
+    color: #03a87c;
+    height: 37px;
+    line-height: 34px;
+    padding: 0 16px;
+    border: 1px solid rgb(3, 168, 124);
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: lighter;
+    background-color: transparent;
+}
+
+.publish-button:hover,
+.publish-button:active,
+.publish-button:focus {
+    border-color: #029e74;
+    color: #018f69;
+}
+
+/* pre {
+    border: none;
+}
+
+pre > pre {
+    margin: 0;
+    padding: 0;
+} */
+
+blockquote {
+    font-family: "Georgia", serif;
+}
+
+h1 {
+    font-family: "Georgia", serif;
+    font-weight: bold;
+}
+
+h2, h3, h4, h5 {
+    font-family: "Georgia", serif;
+}
