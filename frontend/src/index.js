@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { makeMainRoutes } from './Router';
+import MakeMainRoutes from './Router';
 import { createStore } from 'redux';
 import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
@@ -22,7 +22,7 @@ networkInterface.use([{
         
         if (localStorage.getItem('id_token')) {
             var idToken = localStorage.getItem("id_token");
-            req.options.headers.authorization = "Bearer" + idToken;
+            req.options.headers.authorization = "Bearer " + idToken;
         }
 
         next();
@@ -37,9 +37,7 @@ let store = createStore(reducers);
 
 ReactDOM.render((
     <ApolloProvider client={client} store={store}>
-        {
-            makeMainRoutes()
-        }
+        <MakeMainRoutes></MakeMainRoutes>
     </ApolloProvider>
 ), document.getElementById('root'));
 

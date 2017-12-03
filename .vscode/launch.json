@@ -1,14 +1,36 @@
 {
   "version": "0.2.0",
-  "configurations": [{
+  "configurations": [
+
+    {
     "name": "Chrome",
     "type": "chrome",
     "request": "launch",
     "url": "http://localhost:3000",
-    "webRoot": "${workspaceRoot}/src",
+    "webRoot": "${workspaceRoot}/frontend/src",
     "userDataDir": "${workspaceRoot}/.vscode/chrome",
     "sourceMapPathOverrides": {
       "webpack:///src/*": "${webRoot}/*"
     }
+  },
+  {
+    "name": "Backend Tests",
+    "type": "node",
+    "request": "launch",
+    "program": "${workspaceRoot}/backend/node_modules/.bin/jest",
+    "stopOnEntry": false,
+    "args": ["--runInBand"],
+    "cwd": "${workspaceRoot}/backend",
+    "preLaunchTask": null,
+    "runtimeExecutable": null,
+    "runtimeArgs": [
+        "--nolazy"
+    ],
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "externalConsole": false,
+    "sourceMaps": false,
+    "outDir": null
   }]
 }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import { gql, graphql } from 'react-apollo';
+import { PropTypes } from 'prop-types';
+import draftToMarkdown from 'draftjs-to-markdown';
+import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
 import './entryEditor.css';
 import 'draft-js/dist/Draft.css';
 
@@ -148,6 +151,24 @@ class EntryEditor extends Component {
         );
     }
 
+    _publish(e) {
+        e.preventDefault();
+        const raw = convertToRaw(this.state.editorState.getCurrentContent());
+        const markdown = draftToMarkdown(raw);
+        this.props.mutate({
+            variables: {
+                title: "Test title",
+                markdown: markdown,
+            }
+        })
+        .then(({ data }) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     render() {
         const {editorState} = this.state;
 
@@ -184,11 +205,22 @@ class EntryEditor extends Component {
                 </div>
                 <br/>
                 <br/>
-                <button className="publish-button">Publish</button>
+                <button className="publish-button" onClick={this._publish.bind(this)}>Publish</button>
                 <hr/>
             </div>
         );
     }
 }
 
-export default EntryEditor;
+const submitEntry = gql`
+    mutation createEntry($title: String!, $markdown: String!) {
+        createEntry(title: $title, markdown: $markdown) {
+            id
+            createdAt
+            updatedAt
+            markdown
+            title
+        }
+    }`
+
+export default graphql(submitEntry)(EntryEditor);

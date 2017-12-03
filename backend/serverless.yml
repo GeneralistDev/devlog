@@ -1,0 +1,55 @@
+service: devlog
+
+plugins:
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: ap-southeast-2
+
+custom:
+  dynamodb:
+    tablenames:
+      usersTable: usersTable-${opt:stage}
+
+functions:
+  graphql:
+    handler: src/graphql/handler.handler
+    events:
+      - http:
+          path: graphql
+          method: POST
+          cors: true
+    environment:
+      USERS_TABLE: ${self:custom.dynamodb.tablenames.usersTable}
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.dynamodb.tablenames.usersTable}
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: auth0UserId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: byAuth0UserId
+            KeySchema:
+              - AttributeName: auth0UserId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+
